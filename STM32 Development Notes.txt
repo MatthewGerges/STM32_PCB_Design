@@ -1,0 +1,27 @@
+STM32 Development Notes
+
+- Instead of LDO you'd prolly use switching regulator
+capacitors help chip source current from actual supply - might have conductance or resistance and cant get current fast enough so cap would be for local energy storage
+-volatage rating should be at least double that of the voltage it's connected to
+voltage derating = higher the voltage across the cap = lower the capacitance will be from its nominal value
+0.1 microFerrad = standard
+
+Also add bulk decoupling cap
+2.2 micro, 4.7 micro or 10 microferrads
+
+vcap is output for internal regulator
+Add net name to things that are not vcc or ground
+
+If bootloader is run, it can be reflashed via USB or i2c - pull boot1 pin down low since 
+--->we'll just use serial wide debug?
+Should put a resistor there that you could desolder and tie to high or a switch
+
+Nreset pin (n = inverted logic), if pulled low the device will reset. So we add a capacitor to create a debouncing or filtering circuit - it has an internal pullup. We also tie it high to 3v3 with pull-up resistor - strength. 
+---->IDK why we need pull-up and pull up/down resistors why can't we just tie it high or low
+---->What is debouncing or filtering circuit - I still need explanation
+
+Nrst will be connected to serial debug later - IDK
+STM32 datasheet can support 4-26 MHZ clock - why can't we just use internal one? 
+
+Crystal has load capacitance - to determine values of capacitors: load capacitance - stray capacitance (2pf for example) * 2 (IDK what stray capacitance is)
+
